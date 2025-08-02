@@ -2,4 +2,27 @@ body,
 html {
   margin: 0;
   padding: 0;
+  background-image: url("images/table.png");
+  height: 100vh;
+}
+
+body {
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1em;
+}
+
+button {
+  font-size: 1.2em;
+  padding: 0.5em;
+  background-color: rgb(255, 238, 0);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:hover {
+  font-weight: bolder;
+  border: 3px solid black;
 }

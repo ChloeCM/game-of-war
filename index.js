@@ -37,6 +37,18 @@ drawCardBtn.addEventListener("click", function () {
 
       const winnerCard = determineCardWinner(data.cards[0], data.cards[1]);
       headerEl.textContent = winnerCard;
+
+      if (data.remaining === 0) {
+        drawCardBtn.disabled = true;
+
+        if (computerScore > myScore) {
+          header.textContent = `Computer Wins the Game!!`;
+        } else if (computerScore < myScore) {
+          header.textContent = `You Win the Game!!`;
+        } else {
+          header.textContent = `It's a tie!!`;
+        }
+      }
     });
 });
 
@@ -61,10 +73,14 @@ function determineCardWinner(card1, card2) {
   const cardValue2 = cardOptions.indexOf(card2.value);
 
   if (cardValue1 > cardValue2) {
-    return (header.textContent = `Computer Wins!`);
+    computerScore++;
+    computerScoreEl.textContent = `Computer Score: ${computerScore}`;
+    return `Computer Wins!`;
   } else if (cardValue1 < cardValue2) {
-    return (header.textContent = `You Wins!`);
+    myScore++;
+    myScoreEl.textContent = `My Score: ${myScore}`;
+    return `You Win!`;
   } else {
-    return (header.textContent = `It's a tie!!`);
+    return `War!!`;
   }
 }

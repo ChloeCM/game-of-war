@@ -6,6 +6,8 @@ const computerScoreEl = document.getElementById("computer-score");
 const myScoreEl = document.getElementById("my-score");
 const remainingCards = document.getElementById("remaining-cards");
 let deckId;
+let computerScore = 0;
+let myScore = 0;
 
 function handleClick() {
   fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
@@ -14,19 +16,17 @@ function handleClick() {
       console.log(data);
       deckId = data.deck_id;
       console.log(deckId);
+      remainingCards.textContent = `Remaining Cards: ${data.remaining}`;
     });
 }
 
 newDeckBtn.addEventListener("click", handleClick);
 
 drawCardBtn.addEventListener("click", function () {
-  console.log("clicked");
-
   fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.cards);
-
+      remainingCards.textContent = `Remaining Cards: ${data.remaining}`;
       cardContainer.children[0].innerHTML = `
         <img src=${data.cards[0].image} class="card" />
       `;
@@ -36,6 +36,7 @@ drawCardBtn.addEventListener("click", function () {
       `;
 
       const winnerCard = determineCardWinner(data.cards[0], data.cards[1]);
+      headerEl.textContent = winnerCard;
     });
 });
 
@@ -60,10 +61,10 @@ function determineCardWinner(card1, card2) {
   const cardValue2 = cardOptions.indexOf(card2.value);
 
   if (cardValue1 > cardValue2) {
-    console.log("Computer Wins!");
+    return (header.textContent = `Computer Wins!`);
   } else if (cardValue1 < cardValue2) {
-    console.log("You Wins!");
+    return (header.textContent = `You Wins!`);
   } else {
-    console.log("It's a tie!!");
+    return (header.textContent = `It's a tie!!`);
   }
 }

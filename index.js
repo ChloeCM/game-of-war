@@ -5,6 +5,7 @@ const headerEl = document.getElementById("header");
 const computerScoreEl = document.getElementById("computer-score");
 const myScoreEl = document.getElementById("my-score");
 const remainingCards = document.getElementById("remaining-cards");
+const endResultEl = document.getElementById("end-result");
 let deckId;
 let computerScore = 0;
 let myScore = 0;
@@ -17,6 +18,18 @@ function handleClick() {
       deckId = data.deck_id;
       console.log(deckId);
       remainingCards.textContent = `Remaining Cards: ${data.remaining}`;
+      drawCardBtn.disabled = false;
+
+      endResultEl.style.display = "none";
+      computerScore = 0;
+      myScore = 0;
+      headerEl.textContent = "Starting Game of War...";
+      myScoreEl.textContent = "Computer Score: 0";
+      computerScoreEl.textContent = "My Score: 0";
+      computerScoreEl.style.display = "block";
+      myScoreEl.style.display = "block";
+      cardContainer.children[0].innerHTML = "";
+      cardContainer.children[1].innerHTML = "";
     });
 }
 
@@ -41,13 +54,9 @@ drawCardBtn.addEventListener("click", function () {
       if (data.remaining === 0) {
         drawCardBtn.disabled = true;
 
-        if (computerScore > myScore) {
-          header.textContent = `Computer Wins the Game!!`;
-        } else if (computerScore < myScore) {
-          header.textContent = `You Win the Game!!`;
-        } else {
-          header.textContent = `It's a tie!!`;
-        }
+        optionsAfterFinishing();
+        // computerScoreEl.textContent = ``;
+        // myScoreEl.textContent = ``;
       }
     });
 });
@@ -83,4 +92,28 @@ function determineCardWinner(card1, card2) {
   } else {
     return `War!!`;
   }
+}
+
+function optionsAfterFinishing() {
+  if (computerScore > myScore) {
+    headerEl.textContent = `Computer Wins the Game!!`;
+  } else if (computerScore < myScore) {
+    headerEl.textContent = `You Win the Game!!`;
+  } else {
+    headerEl.textContent = `It's a tie!!`;
+  }
+
+  computerScoreEl.style.display = "none";
+  myScoreEl.style.display = "none";
+
+  endResultEl.style.display = "block";
+  endResultEl.innerHTML = `
+    <h1>${headerEl.textContent}</h1>
+    <br />
+    <h2>Computer Score: ${computerScore}</h2>
+    <h2>My Score: ${myScore}</h2>
+    <br />
+    <p>Please click the <i>New Deck, Please</i> button above to start a new game</p>
+
+  `;
 }

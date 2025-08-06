@@ -96,11 +96,11 @@ function determineCardWinner(card1, card2) {
 
 function optionsAfterFinishing() {
   if (computerScore > myScore) {
-    headerEl.textContent = `Computer Wins the Game!!`;
+    headerEl.textContent = `😔 Computer Wins the Game!! 😔`;
   } else if (computerScore < myScore) {
-    headerEl.textContent = `You Win the Game!!`;
+    headerEl.textContent = `🏆 You Win the Game!! 🏆`;
   } else {
-    headerEl.textContent = `It's a tie!!`;
+    headerEl.textContent = `💀 It's a tie!! 💀`;
   }
 
   computerScoreEl.style.display = "none";
